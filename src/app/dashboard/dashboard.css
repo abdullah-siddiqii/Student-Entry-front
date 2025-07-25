@@ -1,0 +1,179 @@
+body {
+  margin: 0;
+  font-family: 'Segoe UI', sans-serif;
+}
+Header{
+  display: flex;
+align-items: center;  
+justify-content: space-between;
+}
+
+/* Navbar */
+.navbar {
+  background-color: #1a2e40;
+  color: white;
+  display: flex;
+  align-items: center;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  position: sticky;
+  top: 0;
+
+}
+
+.navbar-content {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.signout-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background-color: #cc1f1a;
+  color: white;
+  border: none;
+  padding: 10px 16px;
+  border-radius: 6px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  overflow: hidden;
+  position: relative;
+  
+}
+
+.signout-btn .logout-icon {
+  opacity: 0;
+  transform: translateX(-90px);
+  transition: all 0.3s ease;
+  font-size: 1.1rem;
+}
+
+.signout-btn:hover {
+  background-color: #a31612;
+  transform: translateX(4px);
+}
+
+.signout-btn:hover .logout-icon {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+
+.signout-btn{
+  margin-right: 2rem;
+  align-items: center;
+  display: flex;
+  font-weight: bold;
+  font-size: medium;
+}
+
+.logo {
+  width: 80px;
+  height: 80px;
+  object-fit: contain;
+}
+
+.uni-name {
+  font-size: 1.5rem;
+  font-weight: bold;
+  letter-spacing: 1px;
+  margin-bottom: 1.6rem;
+}
+
+/* Layout */
+.dashboard-container {
+  display: flex;
+  min-height: calc(100vh - 60px);
+}
+
+.sidebar {
+  width: 200px;
+  background-color: #2d3e50;
+  color: white;
+  padding: 20px;
+}
+
+.sidebar h2 {
+  font-size: 1.2rem;
+  margin-bottom: 20px;
+}
+
+.nav-button {
+  display: block;
+  width: 100%;
+  background: none;
+  border: none;
+  color: white;
+  padding: 10px 0;
+  text-align: left;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: background 0.2s;
+}
+
+.nav-button:hover {
+  background-color: #3b4f64;
+}
+
+.main-content {
+  flex: 1;
+  padding: 40px;
+  background: #f6f8fb;
+}
+
+.title {
+  font-size: 2rem;
+  color: #2d3e50;
+  margin-bottom: 20px;
+}
+
+.message {
+  padding: 10px;
+  background-color: #fcebea;
+  color: #cc1f1a;
+  margin-bottom: 20px;
+  border-radius: 5px;
+}
+
+.form input {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 12px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+}
+
+.form button {
+  width: 100%;
+  padding: 12px;
+  background-color: #2d89ef;
+  color: white;
+  font-weight: bold;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.form button:hover {
+  background-color: #1b6ec2;
+}
+
+.student-list {
+  display: grid;
+  gap: 20px;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+}
+
+.student-card {
+  background: white;
+  padding: 16px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+.empty {
+  font-style: italic;
+  color: #999;
+}
