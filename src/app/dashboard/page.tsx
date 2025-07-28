@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import './dashboard.css';
+import toast from 'react-hot-toast';
 
 type Student = {
   _id: string;
@@ -31,17 +32,21 @@ export default function Dashboard() {
         window.location.href = '/login';
         return;
       }
-
+      
       const data = await res.json();
       setStudents(data);
     } catch (error) {
+      toast.error("Failed to fetch Students")
       setMessage('❌ Failed to fetch students');
     }
   };
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-  };
+const handleChange = (
+  e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+) => {
+  setFormData({ ...formData, [e.target.name]: e.target.value });
+};
+
 const handleLogout = async () => {
   try {
     const res = await fetch('http://localhost:5000/api/auth/logout', {
@@ -51,7 +56,10 @@ const handleLogout = async () => {
 
     if (res.ok) {
       window.location.href = '/login';
+      toast.success("Logout successfull")
+      
     } else {
+      toast.error("Logout Failed")
       alert('Logout failed');
     }
   } catch (err) {
@@ -76,16 +84,39 @@ const handleLogout = async () => {
 
       if (res.ok) {
         setMessage(`✅ Student "${result.name}" added!`);
+        toast.success("Student Added Successfull")
         setTimeout(() => setMessage(''), 3000);
         setFormData({ name: '', email: '', age: '', course: '' });
         fetchStudents();
       } else {
         setMessage(`❌ Error: ${result.message || 'Something went wrong'}`);
+        toast.error("Submit Failed")
       }
     } catch (err) {
+    toast.error("Submit Failed")
       setMessage('❌ Failed to submit');
     }
   };
+
+  const deleteStudent = async (id: string) => {
+  try {
+    const res = await fetch(`http://localhost:5000/api/students/${id}`, {
+      method: 'DELETE',
+      credentials: 'include',
+    });
+
+    const result = await res.json();
+
+    if (res.ok) {
+      toast.success(result.message || 'Student deleted');
+      fetchStudents(); // update list
+    } else {
+      toast.error(result.message || 'Delete failed');
+    }
+  } catch (error) {
+    toast.error('Server error');
+  }
+};
 
   return (
     <>
@@ -115,7 +146,6 @@ const handleLogout = async () => {
         <main className="main-content">
           <h2 className="title">🎓 Student Management System</h2>
 
-          {message && <div className="message">{message}</div>}
 
           {!showList ? (
             <section className="form-section">
@@ -123,7 +153,24 @@ const handleLogout = async () => {
                 <input name="name" placeholder="👤 Full Name" value={formData.name} onChange={handleChange} required />
                 <input name="email" type="email" placeholder="📧 Email" value={formData.email} onChange={handleChange} required />
                 <input name="age" type="number" placeholder="🎂 Age" value={formData.age} onChange={handleChange} required />
-                <input name="course" placeholder="📘 Course" value={formData.course} onChange={handleChange} required />
+              <select style={{
+  
+  height: "25px",
+  marginBottom:"1rem" 
+
+}}
+  name="course"
+  value={formData.course}
+  onChange={handleChange}
+  required
+>
+  <option value="BSCS">BSCS</option>
+  <option value="BSSE">BSSE</option>
+  <option value="BSAI">BSAI</option>
+  <option value="BBA">BBA</option>
+  <option value="BSIT">BSIT</option>
+  <option value="Dpharm">Dpharm</option>
+</select>
                 <button type="submit">Add Student</button>
               </form>
             </section>
@@ -133,14 +180,23 @@ const handleLogout = async () => {
                 <p className="empty">No students found yet.</p>
               ) : (
                 <div className="student-list">
-                  {students.map((student) => (
-                    <div key={student._id} className="student-card">
-                      <h3>{student.name}</h3>
-                      <p>📧 {student.email}</p>
-                      <p>🎓 {student.course}</p>
-                      <p>🎂 {student.age} years old</p>
-                    </div>
-                  ))}
+                {students.map((student) => (
+  <div key={student._id} className="student-card">
+    <h3>{student.name}</h3>
+    <p>📧 {student.email}</p>
+    <p>🎓 {student.course}</p>
+    <p>🎂 {student.age} years old</p>
+    <button
+      onClick={() => deleteStudent(student._id)}
+      className="delete-button"
+      style={{ marginTop: '10px', backgroundColor: '#f44336', color: 'white', cursor:'pointer' }}
+    >
+      🗑 Delete
+    </button>
+  </div>
+))}
+
+                  
                 </div>
               )}
             </section>

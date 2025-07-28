@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import './Login.css';
+import toast from 'react-hot-toast';
 export default function LoginPage() {
   const router = useRouter();
   const [formData, setFormData] = useState({ email: '', password: '' });
@@ -28,8 +29,10 @@ export default function LoginPage() {
 
       if (res.ok) {
         router.push('/dashboard');
+        toast.success("Login Success")
       } else {
         setMessage(result.message || 'Login failed');
+        toast.error("Login Failed")
       }
     } catch (error) {
       setMessage('Server error');
