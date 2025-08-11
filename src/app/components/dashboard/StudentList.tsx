@@ -1,6 +1,6 @@
 // components/dashboard/StudentList.tsx
 import { Student } from "../../types";
-import Image from "next/image";
+
 interface StudentListProps {
   students: Student[];
   searchTerm: string;
@@ -24,7 +24,6 @@ interface StudentListProps {
     trackColor?: string
   ) => string;
 }
-
 
 export default function StudentList({
   students,
@@ -120,7 +119,7 @@ export default function StudentList({
                 //     alt={student.name}
                 //    
                 //   />
-             <Image
+             <img 
   src={`http://localhost:5000${student.image}`} 
   alt={student.name} 
   className="student-image" 

@@ -1,7 +1,7 @@
 // app/dashboard/page.tsx
 'use client';
 
-import { Suspense, useEffect, useState ,useCallback} from 'react';
+import { Suspense, useEffect, useState } from 'react';
 import Modal from 'react-modal';
 import toast from 'react-hot-toast';
 import Swal from 'sweetalert2';
@@ -73,7 +73,6 @@ export default function Dashboard() {
   
   // This useEffect is now redundant and can be removed, as the state is correctly initialized.
   // We'll keep a similar check to handle changes to the URL after the initial load.
-  
   useEffect(() => {
     const section = searchParams?.get('section');
     if (section && ['studentList', 'addStudent', 'courseList', 'addCourse'].includes(section)) {
@@ -116,11 +115,13 @@ export default function Dashboard() {
   }, [searchTerm, minAge, maxAge, currentPage, limit]);
 
   // Fetch data
-
+  useEffect(() => {
+    fetchStudents(searchTerm, minAge, maxAge, currentPage, limit);
+    fetchCourses();
+  }, [searchTerm, minAge, maxAge, currentPage, limit]);
 
   // API functions
-const fetchStudents = useCallback(
-  async (
+  const fetchStudents = async (
     search: string = '',
     min: number = minAge,
     max: number = maxAge,
@@ -152,34 +153,26 @@ const fetchStudents = useCallback(
       toast.error('❌ Failed to fetch students');
       console.error('Fetch students error:', error);
     }
-  },
-  [minAge, maxAge, currentPage, limit] // ✅ API_BASE_URL hata diya
-);
+  };
 
-const fetchCourses = useCallback(async () => {
-  try {
-    const res = await fetch(`${API_BASE_URL}/courses`, {
-      credentials: 'include',
-    });
+  const fetchCourses = async () => {
+    try {
+      const res = await fetch(`${API_BASE_URL}/courses`, {
+        credentials: 'include',
+      });
 
-    if (res.status === 401) {
-      window.location.href = '/login';
-      return;
+      if (res.status === 401) {
+        window.location.href = '/login';
+        return;
+      }
+
+      const data = await res.json();
+      setCourses(data || []);
+    } catch (error) {
+      toast.error('❌ Failed to fetch courses');
+      console.error('Fetch courses error:', error);
     }
-
-    const data = await res.json();
-    setCourses(data || []);
-  } catch (error) {
-    toast.error('❌ Failed to fetch courses');
-    console.error('Fetch courses error:', error);
-  }
-}, []); // ✅ Empty array kyunki API_BASE_URL constant hai
-
-
-useEffect(() => {
-  fetchStudents(searchTerm, minAge, maxAge, currentPage, limit);
-  fetchCourses();
-}, [searchTerm, minAge, maxAge, currentPage, limit, fetchStudents, fetchCourses]);
+  };
 
   // Student CRUD operations
   const deleteStudent = async (id: string) => {
