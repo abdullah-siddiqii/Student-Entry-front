@@ -11,6 +11,24 @@ body {
   height: 100vh;
   background-color: #f4f6f9;
 }
+/* Styling for the new image input */
+.image-input {
+  display: block;
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  margin-bottom: 1rem;
+}
+
+/* Styling for student images in the list */
+.student-card .student-image {
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+  border-radius: 50%;
+  margin-bottom: 10px;
+}
 
 .login-box {
   background: white;
