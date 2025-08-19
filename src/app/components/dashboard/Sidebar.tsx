@@ -1,6 +1,7 @@
 // components/dashboard/Sidebar.tsx
 import { useRouter } from 'next/navigation';
 import { DashboardSection } from '../../types';
+import Link from 'next/link';
 
 interface SidebarProps {
   setShowSection: (section: DashboardSection) => void;
@@ -19,45 +20,57 @@ export default function Sidebar({
 }: SidebarProps) {
   const router = useRouter();
 
-  const handleNavigationClick = (section: DashboardSection) => {
-    setShowSection(section);
+  // Async handlers to ensure route change and state update sync properly
+  const handleAddStudent = async () => {
+    resetStudentForm();
+    setShowSection('addStudent');
     setSidebarOpen(false);
-    router.push(`/dashboard?section=${section}`);
+    await router.push('/student/add');
+  };
+
+  const handleStudentList = async () => {
+    setShowSection('studentList');
+    setSidebarOpen(false);
+    await router.push('/student/list');
+  };
+
+const handleAddCourse = async () => {
+  resetCourseForm();
+  setShowSection('addCourse');
+  setSidebarOpen(false);
+  try {
+    await router.push('/course/add');
+  } catch(e) {
+    console.error('Router push failed:', e);
+  }
+};
+
+
+  const handleCourseList = async () => {
+    setShowSection('courseList');
+    setSidebarOpen(false);
+    await router.push('/course/list');
   };
 
   return (
     <aside className={`sidebar ${sidebarOpen ? 'open' : ''}`}>
       <h2>📚 Menu</h2>
-      <button
-        className="nav-button"
-        onClick={() => handleNavigationClick('studentList')}
-      >
-        📋 Student List
-      </button>
-      <button
-        className="nav-button"
-        onClick={() => {
-          handleNavigationClick('addStudent');
-          resetStudentForm();
-        }}
-      >
+
+      <Link href={'/student/add'} className="nav-button"> 
         ➕ Add Student
-      </button>
-      <button
-        className="nav-button"
-        onClick={() => {
-          handleNavigationClick('addCourse');
-          resetCourseForm();
-        }}
-      >
+      </Link>
+
+      <Link href={'/student/list'} className="nav-button" >
+        📋 Student List
+      </Link>
+
+      <Link href={'/course/add'} className="nav-button">
         ➕ Add Course
-      </button>
-      <button
-        className="nav-button"
-        onClick={() => handleNavigationClick('courseList')}
-      >
+      </Link>
+
+      <Link href={'/course/list'} className="nav-button" >
         📋 Course List
-      </button>
+      </Link>
     </aside>
   );
 }

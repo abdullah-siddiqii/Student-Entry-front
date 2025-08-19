@@ -1,6 +1,5 @@
-// components/dashboard/CourseForm.tsx
 import { CourseFormData } from "../../types";
-import { ChangeEvent } from "react";
+import React, { ChangeEvent } from "react";
 
 interface CourseFormProps {
   courseData: CourseFormData;
@@ -19,13 +18,15 @@ export default function CourseForm({
     <section className="form-section">
       <form onSubmit={onSubmit} className="form course-form">
         <h3>{editingId ? "✏ Edit Course" : "➕ Add a New Course"}</h3>
+
         <input
-          name="sname"
-          placeholder="📝 Course Short Name (e.g., BSCS)"
-          value={courseData.sname}
+          name="courseCode"
+          placeholder="📝 Course Code eg:(Cs-101)"
+          value={courseData.courseCode}
           onChange={onChange}
           required
         />
+
         <input
           name="course"
           placeholder="📚 Course Full Name"
@@ -33,13 +34,17 @@ export default function CourseForm({
           onChange={onChange}
           required
         />
+
         <input
           name="creditH"
+          type="number"
           placeholder="⏰ Credit Hours"
           value={courseData.creditH}
           onChange={onChange}
           required
+          min={1}
         />
+
         <input
           name="duration"
           type="number"
@@ -47,8 +52,9 @@ export default function CourseForm({
           value={courseData.duration}
           onChange={onChange}
           required
-          min="1"
+          min={1}
         />
+
         <button type="submit">
           {editingId ? "Update Course" : "Add Course"}
         </button>

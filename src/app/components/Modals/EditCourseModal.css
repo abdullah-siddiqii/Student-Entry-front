@@ -1,0 +1,146 @@
+/* ======================= */
+/* Modal (Light/Dark via Variables) */
+/* ======================= */
+:root {
+  /* Light Theme Colors */
+  --bg-primary: #f0f2f5;
+  --bg-secondary: #fff;
+  --text-primary: #333;
+  --text-secondary: #444;
+  --text-muted: #6c757d;
+  --blue-primary: #022a56;
+  --blue-accent: #007bff;
+  --red-accent: #dc3545;
+  --green-accent: #28a745;
+  --yellow-accent: #ffc107;
+  --light-border: #ced4da;
+  --shadow-light: rgba(0, 0, 0, 0.1);
+  --shadow-card: rgba(0, 0, 0, 0.08);
+  --background-gradient: linear-gradient(135deg, #667eea, #764ba2);
+  --link: #022a56;
+}
+
+.dark-theme {
+  /* Dark Theme Colors */
+  --link: #5cd5e4; /* Adjusted link color for dark theme */
+  --bg-primary: #121212;
+  --bg-secondary: #1e1e1e;
+  --text-primary: #e0e0e0;
+  --text-secondary: #b0b0b0;
+  --text-muted: #999;
+  --blue-primary: #032344;
+  --blue-accent: #5cd5e4;
+  --red-accent: #f44336;
+  --green-accent: #4caf50;
+  --yellow-accent: #ffeb3b;
+  --light-border: #444;
+  --shadow-light: rgba(255, 255, 255, 0.1);
+  --shadow-card: rgba(227, 212, 212, 0.2);
+  --background-gradient: linear-gradient(135deg, #1c2b5a, #2a1f4f);
+}
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.55);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+}
+
+.modal-content {
+  background: var(--bg-secondary);
+  color: var(--text-primary);
+  padding: 25px 30px;
+  border-radius: 14px;
+  max-width: 420px;
+  width: 100%;
+  box-shadow: 0px 8px 22px var(--shadow-card);
+  animation: modalFadeIn 0.25s ease-in-out;
+}
+
+.modal-content h3 {
+  font-size: 1.4rem;
+  font-weight: 600;
+  color: var(--blue-accent);
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.edit-course-form label {
+  display: block;
+  font-weight: 500;
+  margin-bottom: 10px;
+  color: var(--text-secondary);
+}
+
+.edit-course-form input {
+  width: 100%;
+  padding: 10px 12px;
+  margin-top: 5px;
+  margin-bottom: 15px;
+  border: 1px solid var(--light-border);
+  border-radius: 8px;
+  font-size: 0.95rem;
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  outline: none;
+  transition: border-color 0.2s, background-color 0.2s;
+}
+
+.edit-course-form input:focus {
+  border-color: var(--blue-accent);
+  box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.25);
+}
+
+.form-actions {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
+}
+
+.save-button {
+  background-color: var(--blue-accent);
+  color: #fff;
+  padding: 10px 18px;
+  border: none;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.save-button:hover {
+  background-color: var(--blue-primary);
+}
+
+.cancel-button {
+  background-color: var(--bg-primary);
+  color: var(--text-secondary);
+  padding: 10px 18px;
+  border: 1px solid var(--light-border);
+  border-radius: 8px;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.cancel-button:hover {
+  background-color: var(--bg-secondary);
+}
+
+/* Animation */
+@keyframes modalFadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}

@@ -1,6 +1,6 @@
 import { StudentFormData } from "../../types";
 import { ChangeEvent } from "react";
-import Image from "next/image";
+
 interface StudentFormProps {
   formData: StudentFormData;
   imagePreview: string | null;
@@ -23,7 +23,7 @@ export default function StudentForm({
       <form onSubmit={onSubmit} className="form add-student-form">
         <label htmlFor="image-upload" className="image-upload-label">
           {imagePreview ? (
-            <Image src={imagePreview} alt="Preview" className="image-preview" />
+            <img src={imagePreview} alt="Preview" className="image-preview" />
           ) : (
             <svg
               xmlns="http://www.w3.org/2000/svg"

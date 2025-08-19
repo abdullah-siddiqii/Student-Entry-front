@@ -1,6 +1,5 @@
 // components/dashboard/Modals/SuccessModal.tsx
 import Modal from "react-modal";
-import Image from "next/image";
 interface SuccessModalProps {
   isOpen: boolean;
   onClose: () => void;
@@ -16,7 +15,7 @@ export default function SuccessModal({ isOpen, onClose }: SuccessModalProps) {
       overlayClassName="overlay"
     >
       <div className="form-image-container">
-        <Image src="/images/bitemogi.png" alt="bitemogi" className="bitemogi-img" />
+        <img src="/images/bitemogi.png" alt="bitemogi" className="bitemogi-img" />
         <p className="form-image-caption">😊 Smile you have been Added!</p>
       </div>
     </Modal>

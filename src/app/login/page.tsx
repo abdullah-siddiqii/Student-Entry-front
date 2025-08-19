@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import './Login.css';
 import toast from 'react-hot-toast';
+import NavbarL from '../components/dashboard/NavbarL';
 
 export default function LoginPage() {
   const router = useRouter();
@@ -54,9 +55,11 @@ export default function LoginPage() {
   };
 
   return (
-    <main className="login-main">
-      <div className="login-box">
-        <h4 className="login-title">🔐Login to Dashboard</h4>
+    <>
+      <NavbarL />
+      <main className="login-main">
+        <div className="login-box">
+          <h4 className="login-title">🔐Login to Dashboard</h4>
 
         <form onSubmit={handleSubmit} className="login-form">
           <input
@@ -77,7 +80,9 @@ export default function LoginPage() {
             {loading ? 'Logging in...' : 'Login'}
           </button>
         </form>
-      </div>
+      </div> 
+      <div><img src="/images/Login.png" alt="No " className='Deep' /></div>
     </main>
+    </>
   );
 }

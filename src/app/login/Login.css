@@ -1,7 +1,48 @@
+/* ======================= */
+/* Theme Variables */
+/* ======================= */
+:root {
+  /* Light Theme Colors */
+  --bg-primary: #f0f2f5;
+  --bg-secondary: #fff;
+  --text-primary: #333;
+  --text-secondary: #444;
+  --text-muted: #6c757d;
+  --blue-primary: #022a56;
+  --blue-accent: #007bff;
+  --red-accent: #dc3545;
+  --green-accent: #28a745;
+  --yellow-accent: #ffc107;
+  --light-border: #ced4da;
+  --shadow-light: rgba(0, 0, 0, 0.1);
+  --shadow-card: rgba(0, 0, 0, 0.08);
+}
+
+/* Dark Theme Override */
+.dark-theme {
+  --bg-primary: #121212;
+  --bg-secondary: #1e1e1e;
+  --text-primary: #e0e0e0;
+  --text-secondary: #b0b0b0;
+  --text-muted: #999;
+  --blue-primary: #032344aa;
+  --blue-accent: #5cd5e4;
+  --red-accent: #f44336;
+  --green-accent: #4caf50;
+  --yellow-accent: #ffeb3b;
+  --light-border: #444;
+  --shadow-light: rgba(255, 255, 255, 0.1);
+  --shadow-card: rgba(229, 215, 215, 0.478);
+}
+
+/* ======================= */
+/* General Styling */
+/* ======================= */
 body {
   margin: 0;
   font-family: 'Segoe UI', sans-serif;
-  background: #f4f6f9;
+  background: var(--bg-primary);
+  color: var(--text-primary);
 }
 
 .login-main {
@@ -9,19 +50,24 @@ body {
   justify-content: center;
   align-items: center;
   height: 100vh;
-  background-color: #f4f6f9;
+  background-color: var(--bg-primary);
 }
-/* Styling for the new image input */
+
+/* ======================= */
+/* Image Input */
+/* ======================= */
 .image-input {
   display: block;
   width: 100%;
   padding: 8px;
-  border: 1px solid #ddd;
+  border: 1px solid var(--light-border);
   border-radius: 5px;
   margin-bottom: 1rem;
+  background: var(--bg-secondary);
+  color: var(--text-primary);
 }
 
-/* Styling for student images in the list */
+/* Student Image */
 .student-card .student-image {
   width: 100px;
   height: 100px;
@@ -30,44 +76,58 @@ body {
   margin-bottom: 10px;
 }
 
+/* ======================= */
+/* Login Box */
+/* ======================= */
 .login-box {
-  background: white;
+  background: var(--bg-secondary);
   padding: 40px 30px;
   border-radius: 12px;
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
+  box-shadow: 10 8px 20px var(--shadow-light);
   width: 100%;
   max-width: 400px;
+  transition: background 0.3s ease, color 0.3s ease;
 }
 
 .login-title {
   font-size: 1.8rem;
-  color: #2d3e50;
-  margin-bottom: 20px;
+  color: var(--text-primary);
   text-align: center;
 }
 
 .login-message {
-  background: #fdecea;
-  color: #cc1f1a;
+  background: var(--red-accent);
+  color: #fff;
   padding: 10px;
   border-radius: 6px;
   margin-bottom: 20px;
   text-align: center;
 }
 
+/* ======================= */
+/* Form Styling */
+/* ======================= */
 .login-form input {
   width: 100%;
   padding: 12px;
   margin-bottom: 15px;
-  border: 1px solid #ccc;
+  border: 1px solid var(--light-border);
   border-radius: 6px;
   font-size: 1rem;
+  background: var(--bg-secondary);
+  color: var(--text-primary);
+  transition: border-color 0.3s ease;
+}
+
+.login-form input:focus {
+  border-color: var(--blue-accent);
+  outline: none;
 }
 
 .login-form button {
   width: 100%;
   padding: 12px;
-  background-color: #2d89ef;
+  background-color: var(--blue-accent);
   color: white;
   font-weight: bold;
   border: none;
@@ -78,5 +138,25 @@ body {
 }
 
 .login-form button:hover {
-  background-color: #1b6ec2;
+  background-color: var(--blue-primary);
+}
+
+@media screen and (max-width: 460px) {
+  .login-box {
+    padding: 30px 20px;
+    width: 90%;
+  }
+  .Deep{
+    display: none;
+  }
+
+}
+@media screen and (max-width: 668px) {
+  .Deep{
+    display: none;
+    width: 100%;
+    height: auto;
+    margin-top: 20px;
+  }
+  
 }

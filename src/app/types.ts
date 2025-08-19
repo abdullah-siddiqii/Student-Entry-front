@@ -10,22 +10,25 @@ export type Student = {
 
 export type Course = {
   _id: string;
-  sname: string;
+  courseCode: string;
   creditH: string;
   duration: number;
   course: string;
 };
 
 export type StudentFormData = {
-  image: string;
+  _id: string;
   name: string;
   email: string;
-  age: string;
+  age: number|string;           // number (NOT string)
   course: string;
+  image: File | null;    // upload ke liye File | null
 };
 
+
+
 export type CourseFormData = {
-  sname: string;
+  courseCode: string;
   course: string;
   creditH: string;
   duration: string;

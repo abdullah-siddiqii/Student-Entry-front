@@ -1,5 +1,9 @@
 // components/dashboard/StudentList.tsx
+"use client";
+import React from "react";
+import { Slider } from "@heroui/react";
 import { Student } from "../../types";
+import MinMaxRange from "./dualslider";
 
 interface StudentListProps {
   students: Student[];
@@ -16,13 +20,6 @@ interface StudentListProps {
   onPageChange: (page: number) => void;
   onDeleteStudent: (id: string) => void;
   onEditStudent: (student: Student) => void;
-  getSliderBackground: (
-    value: number,
-    min: number,
-    max: number,
-    fillColor?: string,
-    trackColor?: string
-  ) => string;
 }
 
 export default function StudentList({
@@ -40,10 +37,17 @@ export default function StudentList({
   onPageChange,
   onDeleteStudent,
   onEditStudent,
-  getSliderBackground,
 }: StudentListProps) {
+  const handleSliderChange = (val: number | number[]) => {
+    if (Array.isArray(val)) {
+      onMinAgeChange({ target: { value: val[0].toString() } } as React.ChangeEvent<HTMLInputElement>);
+      onMaxAgeChange({ target: { value: val[1].toString() } } as React.ChangeEvent<HTMLInputElement>);
+    }
+  };
+
   return (
     <section className="list-section">
+      {/* Search & Filters */}
       <div className="search-filters">
         <input
           type="text"
@@ -52,57 +56,29 @@ export default function StudentList({
           onChange={onSearch}
           className="search-input"
         />
-        <div className="slider-container">
-          <label
-            style={{
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              marginTop: "0.5rem",
-            }}
-          >
-            Age Range: <strong>{minAge} - {maxAge}</strong>
-          </label>
-          <div className="slider-wrapper">
-            <div className="slider-group">
-              <span>Min</span>
-              <input
-                type="range"
-                min="16"
-                max="99"
-                value={minAge}
-                onChange={onMinAgeChange}
-                style={{ background: getSliderBackground(minAge, 16, 99) }}
-              />
-            </div>
-            <div className="slider-group">
-              <span>Max</span>
-              <input
-                type="range"
-                min="16"
-                max="99"
-                value={maxAge}
-                onChange={onMaxAgeChange}
-                style={{ background: getSliderBackground(maxAge, 16, 99) }}
-              />
-            </div>
-          </div>
+
+        <div className="dd ">
+      <MinMaxRange
+    minAge={minAge}
+    maxAge={maxAge}
+    onChange={(min, max) => {
+      onMinAgeChange({ target: { value: min.toString() } } as React.ChangeEvent<HTMLInputElement>);
+      onMaxAgeChange({ target: { value: max.toString() } } as React.ChangeEvent<HTMLInputElement>);
+    }}
+  />
         </div>
+
         <div className="limit-selector">
           <label>📄 Students per page:</label>
-          <select
-            value={limit}
-            onChange={onLimitChange}
-          >
+          <select value={limit} onChange={onLimitChange}>
             {[2, 4, 6, 10, 20].map((num) => (
-              <option key={num} value={num}>
-                {num}
-              </option>
+              <option key={num} value={num}>{num}</option>
             ))}
           </select>
         </div>
       </div>
 
+      {/* Students List */}
       {students.length === 0 ? (
         <p className="empty">No students found.</p>
       ) : (
@@ -111,60 +87,29 @@ export default function StudentList({
             {students.map((student) => (
               <div key={student._id} className="student-card">
                 {student.image && (
-                //   <img
-                //     src={`${process.env.NEXT_PUBLIC_API_BASE_URL?.replace(
-                //       "/api",
-                //       ""
-                //     )}${student.image}`}
-                //     alt={student.name}
-                //    
-                //   />
-             <img 
-  src={`http://localhost:5000${student.image}`} 
-  alt={student.name} 
-  className="student-image" 
-/>
-
-
+                  <img
+                    src={`http://localhost:5000${student.image}`}
+                    alt={student.name}
+                    className="student-image"
+                  />
                 )}
                 <h3>{student.name}</h3>
                 <p>📧 {student.email}</p>
                 <p>🎓 {student.course}</p>
                 <p>🎂 {student.age} years old</p>
                 <div className="student-actions">
-                  <button
-                    onClick={() => onDeleteStudent(student._id)}
-                    className="delete-button"
-                  >
-                    🗑 Delete
-                  </button>
-                  <button
-                    onClick={() => onEditStudent(student)}
-                    className="edit-button"
-                  >
-                    ✏ Edit
-                  </button>
+                  <button onClick={() => onDeleteStudent(student._id)} className="delete-button">🗑 Delete</button>
+                  <button onClick={() => onEditStudent(student)} className="edit-button">✏ Edit</button>
                 </div>
               </div>
             ))}
           </div>
 
+          {/* Pagination */}
           <div className="pagination">
-            <button
-              disabled={currentPage === 1}
-              onClick={() => onPageChange(currentPage - 1)}
-            >
-              ⬅ Prev
-            </button>
-            <span>
-              Page {currentPage} of {totalPages}
-            </span>
-            <button
-              disabled={currentPage === totalPages}
-              onClick={() => onPageChange(currentPage + 1)}
-            >
-              Next ➡
-            </button>
+            <button disabled={currentPage === 1} onClick={() => onPageChange(currentPage - 1)}>⬅ Prev</button>
+            <span>Page {currentPage} of {totalPages}</span>
+            <button disabled={currentPage === totalPages} onClick={() => onPageChange(currentPage + 1)}>Next ➡</button>
           </div>
         </>
       )}

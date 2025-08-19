@@ -2,17 +2,13 @@
 
 import { useState, useEffect } from "react";
 
-interface NavbarProps {
-  onLogout: () => void;
-  onToggleSidebar?: () => void; // Optional prop for sidebar toggle
-}
 
-export default function Navbar({ onLogout }: NavbarProps) {
+
+export default function Navbar() {
   const [darkMode, setDarkMode] = useState(false);
-  const [sidebarOpen, setSidebarOpen] = useState(false);
 
-  // Load saved theme
   useEffect(() => {
+    // Load saved theme on mount
     const savedTheme = localStorage.getItem("darkTheme");
     if (savedTheme === "true") {
       setDarkMode(true);
@@ -20,7 +16,6 @@ export default function Navbar({ onLogout }: NavbarProps) {
     }
   }, []);
 
-  // Toggle theme
   const toggleTheme = () => {
     const newDarkMode = !darkMode;
     setDarkMode(newDarkMode);
@@ -32,39 +27,16 @@ export default function Navbar({ onLogout }: NavbarProps) {
     localStorage.setItem("darkTheme", String(newDarkMode));
   };
 
-  // Toggle sidebar
-  const toggleSidebar = () => {
-    setSidebarOpen(!sidebarOpen);
-    const sidebar = document.querySelector(".sidebar");
-    if (sidebar) {
-      sidebar.classList.toggle("open", !sidebarOpen);
-    }
-  };
-
   return (
     <header className="navbar">
-      {/* Left: Logo + Name */}
       <div className="navbar-content">
-        <button className="hamburger" onClick={toggleSidebar}  >
-        {sidebarOpen ? "❌" : "☰"}
-        </button>
         <img src="/images/Logo.png" alt="Logo" className="logo" />
         <h1 className="uni-name">The University of Abdullah (TUA)</h1>
          <h1 className="uni-nameS">TUA</h1>
+       
       </div>
-
-      {/* Right: Actions */}
-      <div className="navbar-actions" style={{ display: "flex", gap: "10px", alignItems: "center" }}>
-        {/* Hamburger - mobile only */}
-
-        <button
-          className="signout-btn"
-          onClick={() => {
-            onLogout();
-          }}
-        >
-          🔒 Log out
-        </button>
+      <div className="navbar-actions" style={{ display: "flex", gap: "10px" }}>
+       
         <button className="theme-toggle-btn" onClick={toggleTheme}>
           {darkMode ? "🌙" : "☀️"}
         </button>
