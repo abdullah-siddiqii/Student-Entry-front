@@ -118,9 +118,7 @@ a {
   transition: transform 0.3s ease;
 }
 
-.bitg img:hover {
-  transform: scale(1.05);
-}
+
 
 .main > div:last-child {
   display: flex;
