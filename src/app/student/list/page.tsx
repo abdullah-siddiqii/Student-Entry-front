@@ -276,7 +276,13 @@ export default function StudentListPage() {
     }
   };
 
-  if (loading) return <p style={{ textAlign: 'center', marginTop: '2rem' }}>Checking authentication...</p>;
+  if (loading) {
+  return (
+    <div style={{ display: "flex", justifyContent: "center", marginTop: "2rem" }}>
+      <div className="loader"></div>
+    </div>
+  );
+}
 
   return (
     <>
