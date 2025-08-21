@@ -31,7 +31,7 @@ export default function LoginPage() {
       setLoading(true);
 
       const res = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000'}/api/auth/login`,
+        `${process.env.NEXT_PUBLIC_API_URL || 'https://abdullah-test.whitescastle.com/login'}/api/auth/login`,
         {
           method: 'POST',
           credentials: 'include',
