@@ -13,8 +13,8 @@ import Navbar from '../../components/dashboard/Navbar';
 import Sidebar from '../../components/dashboard/Sidebar';
 import MinMaxRange from '../../components/dashboard/dualslider';
 
-const API_BASE_URL = 'http://localhost:5000/api';
-const FILE_BASE_URL = 'http://localhost:5000'; // images serve hoti hain yahan se
+const API_BASE_URL = 'http://localhost:3000/api';
+const FILE_BASE_URL = 'http://localhost:3000'; // images serve hoti hain yahan se
 
 export default function StudentListPage() {
   const router = useRouter();
@@ -46,7 +46,7 @@ export default function StudentListPage() {
   useEffect(() => {
     (async () => {
       try {
-        const res = await fetch('http://localhost:5000/check-auth', {
+        const res = await fetch('http://localhost:3000/check-auth', {
           method: 'GET',
           credentials: 'include',
         });

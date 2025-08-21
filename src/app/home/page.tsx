@@ -17,7 +17,7 @@ export default function Home() {
   useEffect(() => {
     const checkAuth = async () => {
       try {
-        const res = await fetch('http://localhost:5000/check-auth', {
+        const res = await fetch('http://localhost:3000/check-auth', {
           method: 'GET',
           credentials: 'include',
         });
@@ -52,7 +52,7 @@ export default function Home() {
 
   const handleLogout = async () => {
     try {
-      await fetch('http://localhost:5000/api/auth/logout', {
+      await fetch('http://localhost:3000/api/auth/logout', {
         method: 'POST',
         credentials: 'include',
       });

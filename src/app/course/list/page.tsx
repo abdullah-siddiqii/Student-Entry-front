@@ -14,7 +14,7 @@ import EditCourse from "../../components/Modals/EditCourseModal";
 
 import { Course, DashboardSection } from "../../types";
 
-const API_BASE_URL = "http://localhost:5000/api";
+const API_BASE_URL = "http://localhost:3000/api";
 
 export default function DashboardCourseList() {
   const router = useRouter();
@@ -32,7 +32,7 @@ export default function DashboardCourseList() {
   useEffect(() => {
     const checkAuth = async () => {
       try {
-        const res = await fetch("http://localhost:5000/check-auth", {
+        const res = await fetch("http://localhost:3000/check-auth", {
           method: "GET",
           credentials: "include",
         });
