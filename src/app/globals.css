@@ -836,6 +836,9 @@ html, body {
   width: 40px;
   height: 40px;
   animation: spin 1s linear infinite;
+    display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 @keyframes spin {
