@@ -88,7 +88,7 @@ export default function StudentList({
               <div key={student._id} className="student-card">
                 {student.image && (
                   <img
-                    src={`http://localhost:3000${student.image}`}
+                    src={`https://abdullah-test.whitescastle.com${student.image}`}
                     alt={student.name}
                     className="student-image"
                   />
