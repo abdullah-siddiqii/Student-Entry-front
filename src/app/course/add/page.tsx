@@ -91,8 +91,13 @@ export default function AddCoursePage() {
     }
   };
   if (loading) {
-    return <p style={{ textAlign: 'center', marginTop: '2rem' }}>Checking authentication...</p>;
-  }
+  return (
+    <div style={{ display: "flex", justifyContent: "center", marginTop: "2rem" }}>
+      <div className="loader"></div>
+    </div>
+  );
+}
+
   
   const handleLogout = async () => {
     try {
