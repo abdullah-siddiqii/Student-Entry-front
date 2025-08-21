@@ -21,7 +21,7 @@ export default function CourseForm({
 
         <input
           name="courseCode"
-          placeholder="📝 Course Code eg:(Cs-101)"
+          placeholder="📝 Course Code eg:(CS-101)"
           value={courseData.courseCode}
           onChange={onChange}
           required
@@ -38,21 +38,23 @@ export default function CourseForm({
         <input
           name="creditH"
           type="number"
-          placeholder="⏰ Credit Hours"
+          placeholder="⏰ Credit Hours (1-5)"
           value={courseData.creditH}
           onChange={onChange}
           required
           min={1}
+          max={5}
         />
 
         <input
           name="duration"
           type="number"
-          placeholder="🗓 Duration in Years"
+          placeholder="🗓 Duration in Years (1-5)"
           value={courseData.duration}
           onChange={onChange}
           required
           min={1}
+          max={5}
         />
 
         <button type="submit">
