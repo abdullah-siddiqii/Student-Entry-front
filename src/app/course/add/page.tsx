@@ -87,7 +87,7 @@ export default function AddCoursePage() {
       resetCourseForm();
       setTimeout(() => {
         router.push('/course/list'); // 👈 change route according to your app
-      }, 500);
+      }, 5000);
     } catch (error) {
       toast.error('Server error');
       console.error('Submit course error:', error);

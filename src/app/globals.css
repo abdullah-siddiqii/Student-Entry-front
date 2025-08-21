@@ -6,6 +6,8 @@
   --bg-primary: #f0f2f5;
   --bg-secondary: #fff;
   --text-primary: #333;
+  --edit-bg: black;
+  --edit-b: rgb(254, 254, 254);
   --text-secondary: #444;
   --text-muted: #6c757d;
   --blue-primary: #022a56;
@@ -21,6 +23,8 @@
 .dark-theme {
   /* Dark Theme Colors */
   --bg-primary: #121212;
+  --edit-b: black;
+  --edit-bg:white;
   --bg-secondary: #1e1e1e;
   --text-primary: #e0e0e0;
   --text-secondary: #b0b0b0;
@@ -457,13 +461,13 @@ html, body {
   gap: 0.5rem;
 }
 
-.delete-button,
 .edit-button {
   border: none;
   padding: 0.5rem 1.1rem;
   border-radius: 6px;
   cursor: pointer;
-  color: white;
+   background-color: var(--edit-bg);
+  color:var(--edit-b);
   font-weight: bold;
   font-size: 0.88rem;
   transition: background-color 0.3s ease;
@@ -477,13 +481,10 @@ html, body {
   background-color: #b02a37;
 }
 
-.edit-button {
-  background-color: var(--yellow-accent);
-  color: #000;
-}
+
 
 .edit-button:hover {
-  background-color: #e0a800;
+  background-color: #908d84;
 }
 
 /* ======================= */
@@ -803,7 +804,7 @@ html, body {
   margin-top: 0.5rem;
 } */
 
-.edit-button,
+
 .delete-button {
   padding: 0.4rem 0.6rem;
   border: none;
@@ -812,9 +813,7 @@ html, body {
   color: white;
 }
 
-.edit-button {
-  background-color: var(--blue-accent);
-}
+
 
 .delete-button {
   background-color: var(--red-accent);
