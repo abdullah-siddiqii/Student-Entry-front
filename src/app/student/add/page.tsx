@@ -121,8 +121,10 @@ export default function AddStudentPage() {
       resetStudentForm();
 
       setBitemogiVisible(true);
-      setTimeout(() => setBitemogiVisible(false), 10000);
-
+       setTimeout(() => {
+      setBitemogiVisible(false);
+      router.push("/student/list"); // 👈 change route according to your app
+    }, 1000);
     } catch (error) {
       toast.error('Server error');
       console.error('Submit student error:', error);
