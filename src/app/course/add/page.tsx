@@ -92,7 +92,7 @@ export default function AddCoursePage() {
   };
   if (loading) {
   return (
-    <div style={{ display: "flex", justifyContent: "center", marginTop: "2rem" }}>
+    <div style={{ display: "flex", justifyContent: "center", marginTop: "22rem" }}>
       <div className="loader"></div>
     </div>
   );
