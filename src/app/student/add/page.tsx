@@ -126,7 +126,7 @@ export default function AddStudentPage() {
         setTimeout(() => {
           setBitemogiVisible(false);
           router.push("/student/list");
-        }, 2000);
+        }, 3000);
       })(),
       {
         loading: "Adding student...",
