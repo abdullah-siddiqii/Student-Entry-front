@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { ChangeEvent, useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
 import Swal from 'sweetalert2';
 import 'sweetalert2/dist/sweetalert2.min.css';
@@ -96,6 +96,13 @@ export default function StudentListPage() {
       console.error('Fetch students error:', error);
     }
   };
+  // For image click/change in modal
+const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const file = e.target.files?.[0] || null;
+  setFormData((prev) => ({ ...prev, image: file }));
+  setImagePreview(file ? URL.createObjectURL(file) : null);
+};
+
   useEffect(() => {
   const fetchCourses = async () => {
     try {
@@ -317,16 +324,17 @@ export default function StudentListPage() {
           />
 
           {/* Edit Student Modal */}
-          <EditStudentModal
-            isOpen={editModalOpen}
-            onClose={() => setEditModalOpen(false)}
-            formData={formData}
-            imagePreview={imagePreview}
-            courses={courses}
-            
-            onChange={handleModalChange}
-            onSubmit={handleModalSubmit}
-          />
+      <EditStudentModal
+  isOpen={editModalOpen}
+  onClose={() => setEditModalOpen(false)}
+  formData={formData}
+  imagePreview={imagePreview}
+  courses={courses}
+  onChange={handleModalChange}
+  onImageChange={handleImageChange}  // ✅ FIXED
+  onSubmit={handleModalSubmit}
+/>
+
         </main>
       </div>
     </>
