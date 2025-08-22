@@ -6,7 +6,7 @@
   --bg-primary: #f0f2f5;
   --bg-secondary: #fff;
   --text-primary: #333;
-  --edit-bg: black;
+  --edit-bg:#007bff;
   --edit-b: rgb(254, 254, 254);
   --text-secondary: #444;
   --text-muted: #6c757d;
@@ -500,12 +500,13 @@ html, body {
 }
 
 .pagination button {
-  background-color: var(--blue-accent);
-  color: white;
+  background-color: var(--edit-bg);
+  color:var(--edit-b);
   border: none;
   padding: 0.5rem 1rem;
   border-radius: 5px;
   cursor: pointer;
+  font-weight: bold;
 }
 
 .pagination button:disabled {
