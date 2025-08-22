@@ -15,6 +15,7 @@
   --red-accent: #dc3545;
   --green-accent: #28a745;
   --yellow-accent: #ffc107;
+  --hover:#0055ff;
   --light-border: #ced4da;
   --shadow-light: rgba(0, 0, 0, 0.1);
   --shadow-card: rgba(0, 0, 0, 0.08);
@@ -25,6 +26,7 @@
   --bg-primary: #121212;
   --edit-b: black;
   --edit-bg:white;
+  --hover:rgb(194, 194, 190);
   --bg-secondary: #1e1e1e;
   --text-primary: #e0e0e0;
   --text-secondary: #b0b0b0;
@@ -484,7 +486,7 @@ html, body {
 
 
 .edit-button:hover {
-  background-color: #908d84;
+  background-color:var(--hover);
 }
 
 /* ======================= */
@@ -515,7 +517,7 @@ html, body {
 }
 
 .pagination button:not(:disabled):hover {
-  background-color: #0056b3;
+  background-color:var(--hover);
 }
 
 /* ======================= */
