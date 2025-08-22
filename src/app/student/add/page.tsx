@@ -15,22 +15,21 @@ if (typeof window !== 'undefined') {
   Modal.setAppElement('body');
 }
 
-
 export default function AddStudentPage() {
   const [formData, setFormData] = useState<StudentFormData>({
-    _id: '', // Add _id property to match StudentFormData type
+    _id: '',
     image: null,
     name: '',
     email: '',
-    age:'',
-    course: ''
+    age: '', // keep as string to handle input smoothly
+    course: '',
   });
   const [imageFile, setImageFile] = useState<File | null>(null);
   const [imagePreview, setImagePreview] = useState<string | null>(null);
   const [bitemogiVisible, setBitemogiVisible] = useState(false);
   const [courses, setCourses] = useState<Course[]>([]);
-
   const [loading, setLoading] = useState(true);
+
   const router = useRouter();
 
   useEffect(() => {
@@ -38,25 +37,24 @@ export default function AddStudentPage() {
       try {
         const res = await fetch('https://abdullah-test.whitescastle.com/check-auth', {
           method: 'GET',
-          credentials: 'include', // send cookie
+          credentials: 'include',
         });
 
         if (!res.ok) {
           router.replace('/login');
-           toast.error('Please login to continue');
+          toast.error('Please login to continue');
           return;
         }
 
-        const data = await res.json();
-        setLoading(false); // ✅ now we can render the page
+        await res.json();
+        setLoading(false);
       } catch (err) {
         router.replace('/login');
       }
     };
-
     checkAuth();
   }, [router]);
-  // Fetch courses on mount
+
   useEffect(() => {
     const fetchCourses = async () => {
       try {
@@ -71,7 +69,7 @@ export default function AddStudentPage() {
         console.error('Error fetching courses:', err);
       }
     };
-     Modal.setAppElement('body');
+    Modal.setAppElement('body');
     fetchCourses();
   }, []);
 
@@ -87,56 +85,68 @@ export default function AddStudentPage() {
   };
 
   const resetStudentForm = () => {
-    setFormData({ _id: '', name: '', email: '', age: 0, course: '', image: null });
+    setFormData({ _id: '', name: '', email: '', age: '', course: '', image: null });
     setImageFile(null);
     setImagePreview(null);
   };
 
-  const handleSubmitStudent = async (e: React.FormEvent) => {
-    e.preventDefault();
-    const { name, email, age, course } = formData;
+ const handleSubmitStudent = async (e: React.FormEvent): Promise<void> => {
+  e.preventDefault();
+  const { name, email, age, course } = formData;
 
-    if (!name || !email || !age || !course || !imageFile) {
-      return toast.error('Please fill all required fields');
-    }
+  if (!name || !email || !age || !course || !imageFile) {
+    toast.error("Please fill all required fields");
+    return;
+  }
 
-    try {
-      const formToSend = new FormData();
-      formToSend.append('name', name);
-      formToSend.append('email', email);
-      formToSend.append('age', age.toString());
-      formToSend.append('course', course);
-      formToSend.append('image', imageFile);
+  try {
+    await toast.promise(
+      (async () => {
+        const formToSend = new FormData();
+        formToSend.append("name", name);
+        formToSend.append("email", email);
+        formToSend.append("age", age.toString());
+        formToSend.append("course", course);
+        formToSend.append("image", imageFile);
 
-      const res = await fetch(`${API_BASE_URL}/students`, {
-        method: 'POST',
-        credentials: 'include',
-        body: formToSend,
-      });
+        const res = await fetch(`${API_BASE_URL}/students`, {
+          method: "POST",
+          credentials: "include",
+          body: formToSend,
+        });
 
-      const result = await res.json();
-      if (!res.ok) return toast.error(result.message || ' Something went wrong');
+        const result = await res.json();
+        if (!res.ok) {
+          throw new Error(result.message || "Something went wrong");
+        }
 
-      toast.success(' Student added');
-      resetStudentForm();
+        // Reset form and show animation
+        resetStudentForm();
+        setBitemogiVisible(true);
+        setTimeout(() => {
+          setBitemogiVisible(false);
+          router.push("/student/list");
+        }, 2000);
+      })(),
+      {
+        loading: "Adding student...",
+        success: "Student added successfully!",
+        error: "Something went wrong. Please try again.",
+      }
+    );
+  } catch (err) {
+    console.error("Error adding student:", err);
+  }
+};
 
-      setBitemogiVisible(true);
-       setTimeout(() => {
-      setBitemogiVisible(false);
-      router.push("/student/list"); // 👈 change route according to your app
-    }, 3000);
-    } catch (error) {
-      toast.error('Server error');
-      console.error('Submit student error:', error);
-    }
-  };
+
   if (loading) {
-  return (
-    <div style={{ display: "flex", justifyContent: "center", marginTop: "22rem" }}>
-      <div className="loader"></div>
-    </div>
-  );
-}
+    return (
+      <div style={{ display: 'flex', justifyContent: 'center', marginTop: '22rem' }}>
+        <div className="loader"></div>
+      </div>
+    );
+  }
 
   const handleLogout = async () => {
     try {
@@ -146,23 +156,22 @@ export default function AddStudentPage() {
       });
 
       if (res.ok) {
-        toast.success(' Logout successful');
+        toast.success('Logout successful');
         window.location.href = '/login';
       } else {
-        toast.error(' Logout failed');
+        toast.error('Logout failed');
       }
     } catch (error) {
       toast.error('Server error');
       console.error('Logout error:', error);
     }
   };
+
   return (
     <>
-     <Navbar onLogout={handleLogout} />
-      
-      <div style={{ display: "flex", flexDirection: "row" }}>
-        {/* Sidebar */}
-        <div style={{ display: "flex", height: "1200px" }}>
+      <Navbar onLogout={handleLogout} />
+      <div style={{ display: 'flex', flexDirection: 'row' }}>
+        <div style={{ display: 'flex', height: '1200px' }}>
           <Sidebar
             setShowSection={(section: DashboardSection) => console.log('Section change:', section)}
             setSidebarOpen={(open: boolean) => console.log('Sidebar open:', open)}
@@ -171,25 +180,22 @@ export default function AddStudentPage() {
             sidebarOpen={false}
           />
         </div>
-
-        {/* Main Content */}
-        <main className="flex-1 p-4  Addme"  style={{ width: "100%", display: "flex", flexDirection: "column" , alignItems: "center" }}>
+        <main
+          className="flex-1 p-4 Addme"
+          style={{ width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center' }}
+        >
           <h2 className="title">➕ Add Student</h2>
-          <div style={{ width: "31rem" }}>
+          <div style={{ width: '31rem' }}>
             <StudentForm
               formData={formData}
               imagePreview={imagePreview}
-              editingId={null} // no editing
+              editingId={null}
               courses={courses}
               onChange={handleChangeStudent}
               onSubmit={handleSubmitStudent}
             />
           </div>
-
-          <SuccessModal
-            isOpen={bitemogiVisible}
-            onClose={() => setBitemogiVisible(false)}
-          />
+          <SuccessModal isOpen={bitemogiVisible} onClose={() => setBitemogiVisible(false)} />
         </main>
       </div>
     </>

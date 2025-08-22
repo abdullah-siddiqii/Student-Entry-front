@@ -1,6 +1,7 @@
 import { StudentFormData } from "../../types";
 import { ChangeEvent, useState } from "react";
 import { IoPersonAdd } from "react-icons/io5";
+
 interface StudentFormProps {
   formData: StudentFormData;
   imagePreview: string | null;
@@ -34,8 +35,21 @@ export default function StudentForm({
     <section className="form-section">
       <form onSubmit={handleSubmit} className="form add-student-form">
         <label htmlFor="image-upload" className="image-upload-label">
-      
-          <IoPersonAdd fontSize={84} />
+          {imagePreview ? (
+            <img
+              src={imagePreview}
+              alt="Preview"
+              className="image-preview"
+              style={{
+                objectFit: "cover",
+                borderRadius: "50%",
+                
+              }}
+            />
+          ) : (
+            <IoPersonAdd fontSize={84} />
+          )}
+
           <input
             type="file"
             id="image-upload"
@@ -49,8 +63,18 @@ export default function StudentForm({
           />
           <span className="upload-label-text">+ Add Profile Pic</span>
         </label>
+
         {imageError && (
-          <p style={{ color: "red", fontSize: "0.9rem",display: "block", textAlign: "center", marginTop: "-10px", marginBottom: "10px" }}>
+          <p
+            style={{
+              color: "red",
+              fontSize: "0.9rem",
+              display: "block",
+              textAlign: "center",
+              marginTop: "-10px",
+              marginBottom: "10px",
+            }}
+          >
             Profile picture is required
           </p>
         )}

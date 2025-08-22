@@ -15,93 +15,99 @@ if (typeof window !== 'undefined') {
 }
 
 export default function AddCoursePage() {
-    const router = useRouter();
-    const [loading, setLoading] = useState(true);
-  
- 
-    useEffect(() => {
-      const checkAuth = async () => {
-        try {
-          const res = await fetch('https://abdullah-test.whitescastle.com/check-auth', {
-            method: 'GET',
-            credentials: 'include', // send cookie
-          });
-  
-          if (!res.ok) {
-            router.replace('/login');
-            toast.error('Please login to continue');
-            return;
-          }
-  
-          const data = await res.json();
-          setLoading(false); // ✅ now we can render the page
-        } catch (err) {
+  const router = useRouter();
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const checkAuth = async () => {
+      try {
+        const res = await fetch('https://abdullah-test.whitescastle.com/check-auth', {
+          method: 'GET',
+          credentials: 'include',
+        });
+
+        if (!res.ok) {
           router.replace('/login');
+          toast.error('Please login to continue');
+          return;
         }
-      };
-  
-      checkAuth();
-    }, [router]);
-  // 1. Add state to track the active section.
+
+        await res.json();
+        setLoading(false);
+      } catch (err) {
+        router.replace('/login');
+      }
+    };
+
+    checkAuth();
+  }, [router]);
+
   const [activeSection, setActiveSection] = useState<DashboardSection>('addCourse');
-  
+
   const [courseData, setCourseData] = useState<CourseFormData>({
     courseCode: '',
     course: '',
     creditH: '',
-    duration: ''
+    duration: '',
   });
 
   const resetCourseForm = () => {
     setCourseData({ courseCode: '', course: '', creditH: '', duration: '' });
   };
 
-  const handleChangeCourse = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+  const handleChangeCourse = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+  ) => {
     const { name, value } = e.target;
     setCourseData((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmitCourse = async (e: React.FormEvent) => {
+  const handleSubmitCourse = async (e: React.FormEvent): Promise<void> => {
     e.preventDefault();
-    const {courseCode, course, creditH, duration } = courseData;
+    const { courseCode, course, creditH, duration } = courseData;
 
     if (!courseCode || !course || !creditH || !duration) {
-      return toast.error('Please fill all required fields');
+      toast.error('Please fill all required fields');
+      return;
     }
 
-    try {
-      const res = await fetch(`${API_BASE_URL}/courses`, {
-        method: 'POST',
-        credentials: 'include',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          ...courseData,
-          duration: Number(courseData.duration)
-        }),
-      });
+    await toast.promise(
+      (async () => {
+        const res = await fetch(`${API_BASE_URL}/courses`, {
+          method: 'POST',
+          credentials: 'include',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            ...courseData,
+            duration: Number(courseData.duration),
+            creditH: Number(courseData.creditH),
+          }),
+        });
 
-      const result = await res.json();
-      if (!res.ok) return toast.error(result.message || ' Something went wrong' );
+        const result = await res.json();
+        if (!res.ok) throw new Error(result.message || 'Something went wrong');
 
-      toast.success(' Course added');
-      resetCourseForm();
-      setTimeout(() => {
-        router.push('/course/list'); // 👈 change route according to your app
-      }, 5000);
-    } catch (error) {
-      toast.error('Server error');
-      console.error('Submit course error:', error);
-    }
+        resetCourseForm();
+        setTimeout(() => {
+          router.push('/course/list');
+        }, 1500);
+      })(),
+      {
+        loading: 'Adding course...',
+        success: 'Course added successfully!',
+        error: (err) => err.message || 'Something went wrong',
+      }
+    );
   };
-  if (loading) {
-  return (
-    <div style={{ display: "flex", justifyContent: "center", marginTop: "22rem" }}>
-      <div className="loader"></div>
-    </div>
-  );
-}
 
-  
+  if (loading) {
+    return (
+      <div style={{ display: 'flex', justifyContent: 'center', marginTop: '22rem' }}>
+        <div className="loader"></div>
+      </div>
+    );
+  }
+
   const handleLogout = async () => {
     try {
       const res = await fetch(`${API_BASE_URL}/auth/logout`, {
@@ -110,10 +116,10 @@ export default function AddCoursePage() {
       });
 
       if (res.ok) {
-        toast.success(' Logout successful');
+        toast.success('Logout successful');
         window.location.href = '/login';
       } else {
-        toast.error(' Logout failed');
+        toast.error('Logout failed');
       }
     } catch (error) {
       toast.error('Server error');
@@ -123,10 +129,9 @@ export default function AddCoursePage() {
 
   return (
     <>
-     <Navbar onLogout={handleLogout} />
-      <div style={{display:"flex"}}>
+      <Navbar onLogout={handleLogout} />
+      <div style={{ display: 'flex' }}>
         <div style={{ display: 'flex', height: '1200px' }}>
-          {/* 2. Pass the state-updating function to the Sidebar. */}
           <Sidebar
             setShowSection={setActiveSection}
             setSidebarOpen={(open: boolean) => console.log('Sidebar open:', open)}
@@ -134,25 +139,31 @@ export default function AddCoursePage() {
             resetCourseForm={() => console.log('Reset course form')}
             sidebarOpen={false}
           />
-        </div> 
-           <main className="flex-1 p-4  Addme"  style={{ width: "100%", display: "flex", flexDirection: "column" , alignItems: "center" }}>
-            {/* 3. Conditionally render content based on the activeSection state. */}
-            {activeSection === 'addCourse' && (
-              <>
-                <h2 className="title">➕ Add Course</h2>
-                <div style={{ width: '31rem' ,marginLeft:"2 rem"}}>
-                  <CourseForm
-                    courseData={courseData}
-                    editingId={null}
-                    onChange={handleChangeCourse}
-                    onSubmit={handleSubmitCourse}
-                  />
-                </div>
-              </>
-            )}
-            {/* You can add more conditional blocks here for other views. */}
-          </main>
         </div>
+        <main
+          className="flex-1 p-4 Addme"
+          style={{
+            width: '100%',
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+          }}
+        >
+          {activeSection === 'addCourse' && (
+            <>
+              <h2 className="title">➕ Add Course</h2>
+              <div style={{ width: '31rem', marginLeft: '2rem' }}>
+                <CourseForm
+                  courseData={courseData}
+                  editingId={null}
+                  onChange={handleChangeCourse}
+                  onSubmit={handleSubmitCourse}
+                />
+              </div>
+            </>
+          )}
+        </main>
+      </div>
     </>
   );
 }
