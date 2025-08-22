@@ -1,6 +1,6 @@
 import { StudentFormData } from "../../types";
 import { ChangeEvent, useState } from "react";
-
+import { IoPersonAdd } from "react-icons/io5";
 interface StudentFormProps {
   formData: StudentFormData;
   imagePreview: string | null;
@@ -34,12 +34,8 @@ export default function StudentForm({
     <section className="form-section">
       <form onSubmit={handleSubmit} className="form add-student-form">
         <label htmlFor="image-upload" className="image-upload-label">
-          <img
-            src={imagePreview || "/images/Image.png"}
-            alt="Preview"
-            className="image-preview"
-            // style={{ width: "84px", height: "84px" }}
-          />
+      
+          <IoPersonAdd fontSize={84} />
           <input
             type="file"
             id="image-upload"
