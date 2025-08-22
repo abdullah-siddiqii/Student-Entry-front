@@ -43,10 +43,10 @@ export default function LoginPage() {
       const result = await res.json();
 
       if (res.ok) {
-        toast.success('✅ Login successful!');
+        toast.success('Login successful!');
         router.push('/home');
       } else {
-        toast.error(result.message || '❌ Login failed');
+        toast.error(result.message || ' Login failed');
       }
     } catch (error) {
       console.error('Login error:', error);

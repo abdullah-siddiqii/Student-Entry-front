@@ -115,16 +115,16 @@ export default function AddStudentPage() {
       });
 
       const result = await res.json();
-      if (!res.ok) return toast.error(result.message || '❌ Something went wrong');
+      if (!res.ok) return toast.error(result.message || ' Something went wrong');
 
-      toast.success('✅ Student added');
+      toast.success(' Student added');
       resetStudentForm();
 
       setBitemogiVisible(true);
        setTimeout(() => {
       setBitemogiVisible(false);
       router.push("/student/list"); // 👈 change route according to your app
-    }, 1000);
+    }, 3000);
     } catch (error) {
       toast.error('Server error');
       console.error('Submit student error:', error);
@@ -146,10 +146,10 @@ export default function AddStudentPage() {
       });
 
       if (res.ok) {
-        toast.success('✅ Logout successful');
+        toast.success(' Logout successful');
         window.location.href = '/login';
       } else {
-        toast.error('❌ Logout failed');
+        toast.error(' Logout failed');
       }
     } catch (error) {
       toast.error('Server error');

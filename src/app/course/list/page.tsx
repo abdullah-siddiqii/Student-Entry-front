@@ -97,10 +97,10 @@ export default function DashboardCourseList() {
       });
 
       if (res.ok) {
-        toast.success("✅ Course deleted");
+        toast.success(" Course deleted");
         fetchCourses();
       } else {
-        toast.error("❌ Delete failed");
+        toast.error(" Delete failed");
       }
     } catch (error) {
       toast.error("Server error during course deletion");
@@ -131,7 +131,7 @@ const handleUpdateCourse = async (updatedCourse: Course) => {
     });
 
     if (res.ok) {
-      toast.success("✅ Course updated");
+      toast.success(" Course updated");
       setIsEditModalOpen(false);
       setEditingCourse(null);
       fetchCourses();
@@ -155,10 +155,10 @@ const handleUpdateCourse = async (updatedCourse: Course) => {
       });
 
       if (res.ok) {
-        toast.success("✅ Logout successful");
+        toast.success(" Logout successful");
         router.replace("/login");
       } else {
-        toast.error("❌ Logout failed");
+        toast.error(" Logout failed");
       }
     } catch (error) {
       toast.error("Server error");

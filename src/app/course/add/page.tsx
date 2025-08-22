@@ -81,9 +81,9 @@ export default function AddCoursePage() {
       });
 
       const result = await res.json();
-      if (!res.ok) return toast.error(result.message || '❌ Something went wrong' );
+      if (!res.ok) return toast.error(result.message || ' Something went wrong' );
 
-      toast.success('✅ Course added');
+      toast.success(' Course added');
       resetCourseForm();
       setTimeout(() => {
         router.push('/course/list'); // 👈 change route according to your app
@@ -110,10 +110,10 @@ export default function AddCoursePage() {
       });
 
       if (res.ok) {
-        toast.success('✅ Logout successful');
+        toast.success(' Logout successful');
         window.location.href = '/login';
       } else {
-        toast.error('❌ Logout failed');
+        toast.error(' Logout failed');
       }
     } catch (error) {
       toast.error('Server error');

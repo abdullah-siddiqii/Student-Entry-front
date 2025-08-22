@@ -1,5 +1,5 @@
 import { StudentFormData } from "../../types";
-import { ChangeEvent } from "react";
+import { ChangeEvent, useState } from "react";
 
 interface StudentFormProps {
   formData: StudentFormData;
@@ -18,33 +18,46 @@ export default function StudentForm({
   onChange,
   onSubmit,
 }: StudentFormProps) {
+  const [imageError, setImageError] = useState(false);
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!imagePreview) {
+      setImageError(true);
+      return;
+    }
+    setImageError(false);
+    onSubmit(e);
+  };
+
   return (
     <section className="form-section">
-      <form onSubmit={onSubmit} className="form add-student-form">
+      <form onSubmit={handleSubmit} className="form add-student-form">
         <label htmlFor="image-upload" className="image-upload-label">
-          {imagePreview ? (
-            <img src={imagePreview} alt="Preview" className="image-preview" />
-          ) : (
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="84"
-              height="84"
-              viewBox="0 0 24 24"
-              fill="#888"
-            >
-              <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4 -4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z" />
-            </svg>
-          )}
+          <img
+            src={imagePreview || "/images/Image.png"}
+            alt="Preview"
+            className="image-preview"
+            // style={{ width: "84px", height: "84px" }}
+          />
           <input
             type="file"
             id="image-upload"
             name="image"
             accept="image/*"
-            onChange={onChange}
+            onChange={(e) => {
+              onChange(e);
+              setImageError(false);
+            }}
             style={{ display: "none" }}
           />
           <span className="upload-label-text">+ Add Profile Pic</span>
         </label>
+        {imageError && (
+          <p style={{ color: "red", fontSize: "0.9rem",display: "block", textAlign: "center", marginTop: "-10px", marginBottom: "10px" }}>
+            Profile picture is required
+          </p>
+        )}
 
         <input
           name="name"

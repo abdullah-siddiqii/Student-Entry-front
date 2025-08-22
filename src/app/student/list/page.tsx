@@ -92,7 +92,7 @@ export default function StudentListPage() {
       setTotalPages(data.totalPages || 1);
       setCurrentPage(page);
     } catch (error) {
-      toast.error('❌ Failed to fetch students');
+      toast.error(' Failed to fetch students');
       console.error('Fetch students error:', error);
     }
   };
@@ -108,7 +108,7 @@ export default function StudentListPage() {
       // debugger
       setCourses(data || []); // assuming API returns { courses: [...] }
     } catch (error) {
-      toast.error('❌ Failed to fetch courses');
+      toast.error(' Failed to fetch courses');
       console.error('Fetch courses error:', error);
     }
   };
@@ -144,10 +144,10 @@ export default function StudentListPage() {
       });
 
       if (res.ok) {
-        toast.success('✅ Student deleted');
+        toast.success(' Student deleted');
         fetchStudents();
       } else {
-        toast.error('❌ Delete failed');
+        toast.error(' Delete failed');
       }
     } catch (error) {
       toast.error('Server error during deletion');
@@ -212,14 +212,14 @@ export default function StudentListPage() {
       });
 
       if (res.ok) {
-        toast.success('✅ Student updated');
+        toast.success(' Student updated');
         setEditModalOpen(false);
         setFormData({ _id: '', name: '', email: '', age: 16, course: '', image: null });
         setImagePreview(null);
         fetchStudents();
       } else {
         const err = await res.json().catch(() => ({}));
-        toast.error(`❌ Update failed${err?.message ? `: ${err.message}` : ''}`);
+        toast.error(` Update failed${err?.message ? `: ${err.message}` : ''}`);
       }
     } catch (err) {
       toast.error('Server error during update');
@@ -265,10 +265,10 @@ export default function StudentListPage() {
       });
 
       if (res.ok) {
-        toast.success('✅ Logout successful');
+        toast.success(' Logout successful');
         router.replace('/login');
       } else {
-        toast.error('❌ Logout failed');
+        toast.error(' Logout failed');
       }
     } catch (err) {
       toast.error('Server error');
